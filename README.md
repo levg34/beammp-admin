@@ -1,2 +1,2 @@
 # beammp-admin
-Web interface for BeamMP server
+Web interface for [BeamMP server](https://github.com/BeamMP/BeamMP-Server)
