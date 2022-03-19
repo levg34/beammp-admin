@@ -1,0 +1,35 @@
+[18/3/2022 16:19:18] [INFO] BeamMP Server v2.3.3
+[18/3/2022 16:19:18] [INFO] Sentry started
+[18/3/2022 16:19:18] [INFO] Loaded 14 Mods
+[18/3/2022 16:19:18] [INFO] Lua system online
+[18/3/2022 16:19:18] [INFO] Vehicle data network online on port 30814 with a Max of 10 Clients
+[18/3/2022 16:19:18] [INFO] Vehicle event network online
+[18/3/2022 16:19:18] [INFO] PPSMonitor starting
+[18/3/2022 16:19:18] [INFO] Server up-to-date!
+[18/3/2022 16:19:23] [INFO] Authenticated!
+[18/3/2022 16:22:12] [INFO] Identifying new client...
+[18/3/2022 16:22:12] [INFO] Identification success
+[18/3/2022 16:22:12] [INFO] Client connected
+[18/3/2022 16:22:12] [INFO] Assigned ID 0 to guest0496888
+[18/3/2022 16:22:12] [ERROR] Backend response failed to parse as valid json
+[18/3/2022 16:22:21] [INFO] guest0496888 : Connected
+[18/3/2022 16:22:46] [INFO] guest0496888 is now synced!
+[18/3/2022 16:28:56] [INFO] Identifying new client...
+[18/3/2022 16:28:57] [INFO] Identification success
+[18/3/2022 16:28:57] [INFO] Client connected
+[18/3/2022 16:28:57] [INFO] Assigned ID 1 to guest0912038
+[18/3/2022 16:29:12] [INFO] guest0912038 : Connected
+[18/3/2022 16:29:58] [INFO] guest0912038 is now synced!
+[18/3/2022 17:11:57] [INFO] guest0496888 Connection Terminated
+[18/3/2022 17:13:29] [INFO] guest0912038 Connection Terminated
+[18/3/2022 17:44:36] [ERROR] Backend response failed to parse as valid json
+[18/3/2022 17:49:34] [INFO] gracefully shutting down via SIGINT
+[18/3/2022 17:49:34] [INFO] please wait while all subsystems are shutting down...
+[18/3/2022 17:49:34] [INFO] Subsystem 1/7 shutting down
+[18/3/2022 17:49:34] [INFO] Subsystem 2/7 shutting down
+[18/3/2022 17:49:34] [INFO] Subsystem 3/7 shutting down
+[18/3/2022 17:49:34] [INFO] Subsystem 4/7 shutting down
+[18/3/2022 17:49:34] [INFO] Subsystem 5/7 shutting down
+[18/3/2022 17:49:34] [INFO] Subsystem 6/7 shutting down
+[18/3/2022 17:49:34] [INFO] Subsystem 7/7 shutting down
+[18/3/2022 17:49:35] [INFO] Shutdown.
