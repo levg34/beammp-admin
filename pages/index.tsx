@@ -1,28 +1,17 @@
 import type { NextPage } from 'next'
 import { useState } from 'react'
 import { Badge, Button, ButtonGroup, Card, Container } from 'react-bootstrap'
-import { GetServerSideProps } from 'next'
-import * as fsOld from 'fs'
+import useSWR from 'swr'
 
-const fs = fsOld.promises
+const fetcher = (...args: [RequestInfo, RequestInit | undefined]) => fetch(...args).then(res => res.json())
 
 type ServerState = 'started' | 'stopped' | 'error'
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const logs = await fs.readFile('logs/Server.log', 'utf-8')
-  return {
-    props: {
-      logs
-    }
-  }
-}
-
-interface Props {
-  logs: string
-}
-
-const Home: NextPage<Props> = ({logs}) => {
+const Home: NextPage = () => {
   const [serverState, setServerState] = useState<ServerState>('stopped')
+  const {data,error} = useSWR('/api/logs',fetcher)
+
+  const logs = data?.stdout
 
   const startServer = () => {
     setServerState('started')
