@@ -9,7 +9,22 @@ export default async function handler(
 ) {
   const sshClient = await getSSHClient()
 
-  const response = await sshClient.execCommand('cat ./beammp-server/Server.log')
+  const response: SSHExecCommandResponse = {
+    stdout: 'stdout ignored, see Server.log',
+    stderr: 'stderr redirected to console.error',
+    code: 0,
+    signal: null
+  }
+
+  sshClient.exec('./BeamMP-Server-linux',[], {
+    cwd: './beammp-server',
+    onStderr(chunk) {
+      console.error('stderrChunk', chunk.toString('utf8'))
+    }
+  })
+
+  // pgrep BeamMP
+  // kill -2 $(pgrep BeamMP)
 
   res.status(200).json(response)
 }
