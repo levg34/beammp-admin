@@ -6,11 +6,11 @@ let sshClient: NodeSSH | null = null
 export async function getSSHClient(): Promise<NodeSSH> {
     if (!sshClient) {
         const ssh = new NodeSSH()
-        const { HOST, USERNAME, PASSWORD } = process.env
+        const { HOST, USERNAME, PRIVATE_KEY } = process.env
         sshClient = await ssh.connect({
             host: HOST,
             username: USERNAME,
-            password: PASSWORD
+            privateKey: PRIVATE_KEY
         })
     }
 

@@ -9,7 +9,7 @@ export default async function handler(
 ) {
   const sshClient = await getSSHClient()
 
-  const response = await sshClient.execCommand('cat ./beammp-server/Server.log')
+  const response = await sshClient.execCommand('kill -2 $(pgrep BeamMP)')
 
   res.status(200).json(response)
 }
