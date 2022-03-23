@@ -1,9 +1,10 @@
 import type { NextPage } from 'next'
+import Link from 'next/link'
+import { SSHExecCommandResponse } from 'node-ssh'
 import { useEffect, useState } from 'react'
 import { Badge, Button, ButtonGroup, Card, Container } from 'react-bootstrap'
 import useSWR, { useSWRConfig } from 'swr'
-
-const fetcher = (...args: [RequestInfo, RequestInit | undefined]) => fetch(...args).then(res => res.json())
+import { fetcher } from '../utils/swrUtils'
 
 type ServerState = 'started' | 'stopped' | 'starting...' | 'stopping...'
 
@@ -11,14 +12,14 @@ const Home: NextPage = () => {
   const { mutate } = useSWRConfig()
 
   const [serverState, setServerState] = useState<ServerState>('stopped')
-  const {data: logsResponse} = useSWR('/api/logs',fetcher)
-  const {data: statusResponse} = useSWR('/api/server-status',fetcher)
+  const {data: logsResponse} = useSWR<SSHExecCommandResponse>('/api/logs',fetcher)
+  const {data: statusResponse} = useSWR<SSHExecCommandResponse>('/api/server-status',fetcher)
 
   const serverPID = statusResponse?.stdout
 
   useEffect(() => {
     setServerState(serverPID ? 'started' : 'stopped')
-  },[statusResponse])
+  },[serverPID])
 
   const logs = logsResponse?.stdout
 
@@ -26,6 +27,7 @@ const Home: NextPage = () => {
     setServerState('starting...')
     const res = await fetcher('/api/start-server',undefined)
     refreshData()
+    setTimeout(refreshData,2500)
     console.log(res)
   }
 
@@ -33,6 +35,7 @@ const Home: NextPage = () => {
     setServerState('stopping...')
     const res = await fetcher('/api/stop-server',undefined)
     refreshData()
+    setTimeout(refreshData,5000)
     console.log(res)
   }
 
@@ -56,6 +59,7 @@ const Home: NextPage = () => {
       <br/>
       <br/>
       <Card body as="pre">{logs}</Card>
+      <Link href={'/config'}>Edit configuration</Link>
     </Container>
   )
 }
