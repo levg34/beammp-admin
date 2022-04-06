@@ -16,3 +16,8 @@ export async function getSSHClient(): Promise<NodeSSH> {
 
     return sshClient
 }
+
+export async function resetSSHClient(): Promise<NodeSSH> {
+    sshClient = null
+    return await getSSHClient()
+}
