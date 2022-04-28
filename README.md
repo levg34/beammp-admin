@@ -1,7 +1,12 @@
 # BeamMP admin
 Web interface for [BeamMP server](https://github.com/BeamMP/BeamMP-Server)
 
+Now complete with log rotate, and saving users from rotated logs to database!
+Feature flipping comming soon.
+
 ![Screenshot](doc/beammp%20admin%20screenshot.PNG "Screenshot")
+
+![Screenshot](doc/beammp%20admin%20screenshot%203.PNG "Screenshot")
 
 ![Screenshot](doc/beammp%20admin%20screenshot%202.PNG "Screenshot")
 
