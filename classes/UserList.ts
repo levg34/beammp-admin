@@ -1,3 +1,4 @@
+import { logDateToDate } from "../utils/dateUtils";
 import ConnexionEvent from "./ConnexionEvent";
 import User from "./User";
 
@@ -11,14 +12,14 @@ export default class UserList {
                 const user = this.getUser(e.username);
                 user.connected = e.connected
                 if (e.connected) {
-                    user.lastConnexion = e.date
+                    user.lastConnexion = logDateToDate(e.date).toISOString()
                     user.nbConnexions += 1
                 }
             } else {
                 this.users.push(new User({
                     username: e.username,
                     connected: e.connected,
-                    lastConnexion: e.date,
+                    lastConnexion: logDateToDate(e.date).toISOString(),
                     guest: e.username.startsWith('guest')
                 }))
             }
@@ -69,5 +70,12 @@ export default class UserList {
 
     getGuests(): User[] {
         return this.users.filter(u => u.guest)
+    }
+
+    static fromLogs(logs?: string) {
+        if (!logs) return new UserList([])
+        const logsArray = logs.split('\n')
+        const connexionStream: ConnexionEvent[] = logsArray.filter(l => l.includes(' : Connected') || l.includes(' Connection Terminated')).map(l => new ConnexionEvent(l)) ?? []
+        return new UserList(connexionStream)
     }
 }

@@ -26,9 +26,7 @@ const Home: NextPage = () => {
   },[serverPID])
 
   const logs = logsResponse?.stdout
-  const logsArray = logs?.split('\n')
-  const connexionStream: ConnexionEvent[] = logsArray?.filter(l => l.includes(' : Connected') || l.includes(' Connection Terminated')).map(l => new ConnexionEvent(l)) ?? []
-  const userList = new UserList(connexionStream)
+  const userList = UserList.fromLogs(logs)
 
   const startServer = async () => {
     if (logs) {
