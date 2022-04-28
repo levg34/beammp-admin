@@ -9,7 +9,7 @@ export default async function handler(
 ) {
   const sshClient = await getSSHClient()
 
-  const response = await sshClient.execCommand('cat ./beammp-server/Server.log')
+  const response = await sshClient.execCommand(`sed '/Backend response failed to parse as valid json/d' ./beammp-server/Server.log`)
 
   res.status(200).json(response)
 }
