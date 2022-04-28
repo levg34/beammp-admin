@@ -25,12 +25,16 @@ const Home: NextPage = () => {
     setServerState(serverPID ? 'started' : 'stopped')
   },[serverPID])
 
-  const logsArray = logsResponse?.stdout.split('\n')
-  const logs = logsArray?.filter(l => !l.includes('Backend response failed to parse as valid json')).join('\n')
+  const logs = logsResponse?.stdout
+  const logsArray = logs?.split('\n')
   const connexionStream: ConnexionEvent[] = logsArray?.filter(l => l.includes(' : Connected') || l.includes(' Connection Terminated')).map(l => new ConnexionEvent(l)) ?? []
   const userList = new UserList(connexionStream)
 
   const startServer = async () => {
+    if (logs) {
+      const rotateRes = await fetcher('/api/log-rotate',undefined)
+      console.log(rotateRes)
+    }
     setServerState('starting...')
     const res = await fetcher('/api/start-server',undefined)
     refreshData()
