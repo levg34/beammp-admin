@@ -1,7 +1,8 @@
 const LOCALE = process.env.NEXT_PUBLIC_LOCALE ?? 'en-GB'
 
 function logDateToDate(logDate: string): Date {
-    return new Date(logDateToISODate(logDate).replace(/_/,' '))
+    const date = new Date(logDateToISODate(logDate).replace(/_/,' '))
+    return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(),date.getHours(), date.getMinutes(), date.getSeconds()))
 }
 
 function logDateToISODate(logDate: string): string {
