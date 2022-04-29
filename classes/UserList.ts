@@ -1,6 +1,11 @@
 import { logDateToDate } from "../utils/dateUtils";
 import ConnexionEvent from "./ConnexionEvent";
-import User from "./User";
+import User, {UserType} from "./User";
+
+export type MergeType = {
+    merged: User[],
+    added: User[]
+}
 
 export default class UserList {
     users: User[]
@@ -9,7 +14,7 @@ export default class UserList {
         this.users = []
         events.forEach(e => {
             if (this.containsName(e.username)) {
-                const user = this.getUser(e.username);
+                const user = this.getUser(e.username)
                 user.connected = e.connected
                 if (e.connected) {
                     user.lastConnexion = logDateToDate(e.date).toISOString()
@@ -72,10 +77,37 @@ export default class UserList {
         return this.users.filter(u => u.guest)
     }
 
-    static fromLogs(logs?: string) {
+    static fromLogs(logs?: string): UserList {
         if (!logs) return new UserList([])
         const logsArray = logs.split('\n')
         const connexionStream: ConnexionEvent[] = logsArray.filter(l => l.includes(' : Connected') || l.includes(' Connection Terminated')).map(l => new ConnexionEvent(l)) ?? []
         return new UserList(connexionStream)
+    }
+
+    static fromUsers(users: UserType[]): UserList {
+        const userList = new UserList([])
+        userList.users = users.map(u => new User(u))
+        return userList
+    }
+
+    mergeUsers(users: UserType[]): MergeType {
+        const res: MergeType = {
+            added: [],
+            merged: []
+        }
+        users.map(user => new User(user)).forEach(user => {
+            if (this.containsName(user.username)) {
+                res.merged.push(this.getUser(user.username).merge(user))
+            } else {
+                this.users.push(user)
+                res.added.push(user)
+            }
+        })
+        return res
+    }
+
+    mergeLogs(logs: string): MergeType {
+        const usersToMerge = UserList.fromLogs(logs).getUsers()
+        return this.mergeUsers(usersToMerge)
     }
 }
