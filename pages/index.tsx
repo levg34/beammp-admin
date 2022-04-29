@@ -39,6 +39,8 @@ const Home: NextPage = () => {
     setTimeout(refreshData,1500)
     setTimeout(refreshData,3500)
     console.log(res)
+    const insertRes = await fetcher('/api/import-users',undefined)
+    console.log(insertRes)
   }
 
   const stopServer = async () => {

@@ -4,7 +4,7 @@ import getDBClient from './dbUtils';
 import UserList, { MergeType } from '../classes/UserList';
 import User from '../classes/User';
 
-type ExtractReport = Record<string,MergeType>
+export type ExtractReport = Record<string,MergeType>
 
 async function extractUsersToDb(): Promise<ExtractReport> {
     const ssh = await getSSHClient()
