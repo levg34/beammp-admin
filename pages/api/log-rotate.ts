@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { SSHExecCommandResponse } from 'node-ssh'
 import { getSSHClient } from '../../utils/sshUtils'
 import { logDateToISODate } from '../../utils/dateUtils'
+import { getSedFilterString } from '../../utils/configUtils'
 
 export default async function handler(
   req: NextApiRequest,
@@ -14,7 +15,7 @@ export default async function handler(
 
   const date = logDateToISODate(bashDate)
 
-  const response = await sshClient.execCommand(`sed '/Backend response failed to parse as valid json/d' ./beammp-server/Server.log > ./logs/${date}_Server.log`)
+  const response = await sshClient.execCommand(`sed '${getSedFilterString()}' ./beammp-server/Server.log > ./logs/${date}_Server.log`)
 
   response.stdout += `copied ./beammp-server/Server.log to ./logs/${date}_Server.log`
 
