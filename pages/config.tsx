@@ -36,7 +36,7 @@ const ConfigPage: NextPage = () => {
 
     return <Container>
         <br/>
-        <Link href={'/'}><Button>Return to server monitoring page</Button></Link>
+        <Link href={'/'} passHref><Button>Return to server monitoring page</Button></Link>
         <br/><br/>
         <Form as={Card} body>
             {Object.keys(parsedConfig.General).map(confItem => {
