@@ -12,6 +12,132 @@ export interface paths {
       };
     };
   };
+  "/config": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.config.id"];
+          created_at?: parameters["rowFilter.config.created_at"];
+          SendErrorsShowMessage?: parameters["rowFilter.config.SendErrorsShowMessage"];
+          Name?: parameters["rowFilter.config.Name"];
+          Port?: parameters["rowFilter.config.Port"];
+          ResourceFolder?: parameters["rowFilter.config.ResourceFolder"];
+          AuthKey?: parameters["rowFilter.config.AuthKey"];
+          Private?: parameters["rowFilter.config.Private"];
+          MaxPlayers?: parameters["rowFilter.config.MaxPlayers"];
+          Debug?: parameters["rowFilter.config.Debug"];
+          Description?: parameters["rowFilter.config.Description"];
+          MaxCars?: parameters["rowFilter.config.MaxCars"];
+          Map?: parameters["rowFilter.config.Map"];
+          SendErrors?: parameters["rowFilter.config.SendErrors"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["config"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          /** config */
+          config?: definitions["config"];
+        };
+        query: {
+          /** Filtering Columns */
+          select?: parameters["select"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** Created */
+        201: unknown;
+      };
+    };
+    delete: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.config.id"];
+          created_at?: parameters["rowFilter.config.created_at"];
+          SendErrorsShowMessage?: parameters["rowFilter.config.SendErrorsShowMessage"];
+          Name?: parameters["rowFilter.config.Name"];
+          Port?: parameters["rowFilter.config.Port"];
+          ResourceFolder?: parameters["rowFilter.config.ResourceFolder"];
+          AuthKey?: parameters["rowFilter.config.AuthKey"];
+          Private?: parameters["rowFilter.config.Private"];
+          MaxPlayers?: parameters["rowFilter.config.MaxPlayers"];
+          Debug?: parameters["rowFilter.config.Debug"];
+          Description?: parameters["rowFilter.config.Description"];
+          MaxCars?: parameters["rowFilter.config.MaxCars"];
+          Map?: parameters["rowFilter.config.Map"];
+          SendErrors?: parameters["rowFilter.config.SendErrors"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+    patch: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.config.id"];
+          created_at?: parameters["rowFilter.config.created_at"];
+          SendErrorsShowMessage?: parameters["rowFilter.config.SendErrorsShowMessage"];
+          Name?: parameters["rowFilter.config.Name"];
+          Port?: parameters["rowFilter.config.Port"];
+          ResourceFolder?: parameters["rowFilter.config.ResourceFolder"];
+          AuthKey?: parameters["rowFilter.config.AuthKey"];
+          Private?: parameters["rowFilter.config.Private"];
+          MaxPlayers?: parameters["rowFilter.config.MaxPlayers"];
+          Debug?: parameters["rowFilter.config.Debug"];
+          Description?: parameters["rowFilter.config.Description"];
+          MaxCars?: parameters["rowFilter.config.MaxCars"];
+          Map?: parameters["rowFilter.config.Map"];
+          SendErrors?: parameters["rowFilter.config.SendErrors"];
+        };
+        body: {
+          /** config */
+          config?: definitions["config"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+  };
   "/logfiles": {
     get: {
       parameters: {
@@ -207,6 +333,44 @@ export interface paths {
 }
 
 export interface definitions {
+  /** @description Config */
+  config: {
+    /**
+     * Format: bigint
+     * @description Note:
+     * This is a Primary Key.<pk/>
+     */
+    id: number;
+    /**
+     * Format: timestamp with time zone
+     * @default now()
+     */
+    created_at?: string;
+    /** Format: boolean */
+    SendErrorsShowMessage?: boolean;
+    /** Format: text */
+    Name?: string;
+    /** Format: smallint */
+    Port?: number;
+    /** Format: text */
+    ResourceFolder?: string;
+    /** Format: text */
+    AuthKey?: string;
+    /** Format: boolean */
+    Private?: boolean;
+    /** Format: smallint */
+    MaxPlayers?: number;
+    /** Format: boolean */
+    Debug?: boolean;
+    /** Format: text */
+    Description?: string;
+    /** Format: smallint */
+    MaxCars?: number;
+    /** Format: text */
+    Map?: string;
+    /** Format: boolean */
+    SendErrors?: boolean;
+  };
   /** @description log files imported */
   logfiles: {
     /**
@@ -278,6 +442,36 @@ export interface parameters {
   offset: string;
   /** @description Limiting and Pagination */
   limit: string;
+  /** @description config */
+  "body.config": definitions["config"];
+  /** Format: bigint */
+  "rowFilter.config.id": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.config.created_at": string;
+  /** Format: boolean */
+  "rowFilter.config.SendErrorsShowMessage": string;
+  /** Format: text */
+  "rowFilter.config.Name": string;
+  /** Format: smallint */
+  "rowFilter.config.Port": string;
+  /** Format: text */
+  "rowFilter.config.ResourceFolder": string;
+  /** Format: text */
+  "rowFilter.config.AuthKey": string;
+  /** Format: boolean */
+  "rowFilter.config.Private": string;
+  /** Format: smallint */
+  "rowFilter.config.MaxPlayers": string;
+  /** Format: boolean */
+  "rowFilter.config.Debug": string;
+  /** Format: text */
+  "rowFilter.config.Description": string;
+  /** Format: smallint */
+  "rowFilter.config.MaxCars": string;
+  /** Format: text */
+  "rowFilter.config.Map": string;
+  /** Format: boolean */
+  "rowFilter.config.SendErrors": string;
   /** @description logfiles */
   "body.logfiles": definitions["logfiles"];
   /** Format: text */
