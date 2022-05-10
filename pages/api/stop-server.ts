@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { SSHExecCommandResponse } from 'node-ssh'
+import { getLogger } from '../../utils/loggerUtils'
 import { getSSHClient } from '../../utils/sshUtils'
-import { pino } from 'pino'
 
-const logger = pino().child({file: 'stop-server.ts'})
+const logger = getLogger('stop-server.ts')
 
 export default async function handler(
   req: NextApiRequest,
@@ -15,7 +15,7 @@ export default async function handler(
     const response = await sshClient.execCommand('kill -2 $(pgrep BeamMP)')
   
     logger.info({response, user: 'luc'}, 'server started')
-    
+
     res.status(200).json(response)
   } catch (error) {
     logger.error(error)

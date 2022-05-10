@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import extractUsersToDb, { ExtractReport } from '../../utils/extractUsersToDb'
-import { pino } from 'pino'
+import { getLogger } from '../../utils/loggerUtils'
 
-const logger = pino().child({file: 'import-users.ts'})
+const logger = getLogger('import-users.ts')
 
 type ErrorReturnType = {
   error: any

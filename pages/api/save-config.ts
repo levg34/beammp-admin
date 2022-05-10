@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { saveConfigToDb } from '../../utils/configUtils'
 import { definitions } from '../../types/supabase'
-import { pino } from 'pino'
+import { getLogger } from '../../utils/loggerUtils'
 
-const logger = pino().child({file: 'save-config.ts'})
+const logger = getLogger('save-config.ts')
 
 export default async function handler(
   req: NextApiRequest,

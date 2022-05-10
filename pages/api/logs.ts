@@ -1,10 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { SSHExecCommandResponse } from 'node-ssh'
 import { getSedFilterString } from '../../utils/configUtils'
+import { getLogger } from '../../utils/loggerUtils'
 import { getSSHClient } from '../../utils/sshUtils'
-import { pino } from 'pino'
 
-const logger = pino().child({file: 'logs.ts'})
+const logger = getLogger('logs.ts')
 
 export default async function handler(
   req: NextApiRequest,
