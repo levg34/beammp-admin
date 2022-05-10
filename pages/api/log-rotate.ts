@@ -3,9 +3,9 @@ import { SSHExecCommandResponse } from 'node-ssh'
 import { getSSHClient } from '../../utils/sshUtils'
 import { logDateToISODate } from '../../utils/dateUtils'
 import { getSedFilterString } from '../../utils/configUtils'
-import { pino } from 'pino'
+import { getLogger } from '../../utils/loggerUtils'
 
-const logger = pino().child({file: 'log-rotate.ts.ts'})
+const logger = getLogger('log-rotate.ts.ts')
 
 export default async function handler(
   req: NextApiRequest,

@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { SSHExecCommandResponse } from 'node-ssh'
+import { getLogger } from '../../utils/loggerUtils'
 import { getSSHClient } from '../../utils/sshUtils'
-import { pino } from 'pino'
 
-const logger = pino().child({file: 'config.ts'})
+const logger = getLogger('config.ts')
 
 export default async function handler(
   req: NextApiRequest,

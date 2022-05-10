@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { SSHExecCommandResponse } from 'node-ssh'
+import { getLogger } from '../../utils/loggerUtils'
 import { getSSHClient } from '../../utils/sshUtils'
-import { pino } from 'pino'
 
-const logger = pino().child({file: 'start-server.ts'})
+const logger = getLogger('start-server.ts')
 
 export default async function handler(
   req: NextApiRequest,
@@ -25,7 +25,7 @@ export default async function handler(
         logger.error('stderrChunk', chunk.toString('utf8'))
       }
     })
-    logger.info({user: 'luc'}, 'server started')
+    logger.info({response, user: 'luc'}, 'server started')
   } catch (error) {
     logger.error(error)
   } finally {
