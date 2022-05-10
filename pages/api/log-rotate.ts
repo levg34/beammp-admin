@@ -1,9 +1,11 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { SSHExecCommandResponse } from 'node-ssh'
 import { getSSHClient } from '../../utils/sshUtils'
 import { logDateToISODate } from '../../utils/dateUtils'
 import { getSedFilterString } from '../../utils/configUtils'
+import { pino } from 'pino'
+
+const logger = pino().child({file: 'log-rotate.ts.ts'})
 
 export default async function handler(
   req: NextApiRequest,
@@ -19,10 +21,12 @@ export default async function handler(
     const response = await sshClient.execCommand(`sed '${getSedFilterString()}' ./beammp-server/Server.log > ./logs/${date}_Server.log`)
   
     response.stdout += `copied ./beammp-server/Server.log to ./logs/${date}_Server.log`
+
+    logger.info({from:'./beammp-server/Server.log', to: `./logs/${date}_Server.log`, response, user: 'luc'},'log rotated')
   
     res.status(200).json(response)
   } catch (error) {
-    console.error(error)
+    logger.error(error)
     res.status(500).json({error})
   }
 }

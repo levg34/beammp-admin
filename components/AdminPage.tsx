@@ -71,7 +71,7 @@ const AdminPage = ({login,logout}: Props) => {
         <Card body>
             <Stack direction="horizontal" gap={2}>
                 <span>Logged in as {login}</span>
-                <Image src="https://avatars.githubusercontent.com/u/137276?v=4" roundedCircle style={{height: 35}}/>
+                <Image src="https://avatars.githubusercontent.com/u/137276?v=4" roundedCircle style={{height: 35}} alt="avatar"/>
                 <Button onClick={logout} className="ms-auto">Log out</Button>
             </Stack>
         </Card>

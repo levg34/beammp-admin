@@ -1,7 +1,9 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { SSHExecCommandResponse } from 'node-ssh'
 import { getSSHClient } from '../../utils/sshUtils'
+import { pino } from 'pino'
+
+const logger = pino().child({file: 'server-status.ts'})
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,10 +13,12 @@ export default async function handler(
     const sshClient = await getSSHClient()
   
     const response = await sshClient.execCommand('pgrep BeamMP')
+
+    logger.info({response, user: 'luc'}, 'get server PID')
   
     res.status(200).json(response)
   } catch (error) {
-    console.error(error)
+    logger.error(error)
     res.status(500).json({error})
   }
 }
