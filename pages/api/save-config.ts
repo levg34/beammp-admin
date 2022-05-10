@@ -6,8 +6,13 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const config: definitions['config'] = req.body
-  const result = await saveConfigToDb(config)
-
-  res.status(200).json(result)
+  try {
+    const config: definitions['config'] = req.body
+    const result = await saveConfigToDb(config)
+  
+    res.status(200).json(result)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({error})
+  }
 }

@@ -7,17 +7,22 @@ import { getSedFilterString } from '../../utils/configUtils'
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<SSHExecCommandResponse>
+  res: NextApiResponse<SSHExecCommandResponse | {error: any}>
 ) {
-  const sshClient = await getSSHClient()
-
-  const {stdout: bashDate, stderr} = await sshClient.execCommand(`tail -1 beammp-server/Server.log | awk -F'[][]' '{print $2}'`)
-
-  const date = logDateToISODate(bashDate)
-
-  const response = await sshClient.execCommand(`sed '${getSedFilterString()}' ./beammp-server/Server.log > ./logs/${date}_Server.log`)
-
-  response.stdout += `copied ./beammp-server/Server.log to ./logs/${date}_Server.log`
-
-  res.status(200).json(response)
+  try {
+    const sshClient = await getSSHClient()
+  
+    const {stdout: bashDate, stderr} = await sshClient.execCommand(`tail -1 beammp-server/Server.log | awk -F'[][]' '{print $2}'`)
+  
+    const date = logDateToISODate(bashDate)
+  
+    const response = await sshClient.execCommand(`sed '${getSedFilterString()}' ./beammp-server/Server.log > ./logs/${date}_Server.log`)
+  
+    response.stdout += `copied ./beammp-server/Server.log to ./logs/${date}_Server.log`
+  
+    res.status(200).json(response)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({error})
+  }
 }

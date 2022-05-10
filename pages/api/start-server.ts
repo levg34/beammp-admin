@@ -16,15 +16,20 @@ export default async function handler(
     signal: null
   }
 
-  sshClient.exec('./BeamMP-Server-linux',[], {
-    cwd: './beammp-server',
-    onStderr(chunk) {
-      console.error('stderrChunk', chunk.toString('utf8'))
-    }
-  })
+  try {
+    sshClient.exec('./BeamMP-Server-linux',[], {
+      cwd: './beammp-server',
+      onStderr(chunk) {
+        console.error('stderrChunk', chunk.toString('utf8'))
+      }
+    })
+  } catch (error) {
+    console.error(error)
+  } finally {
+    // pgrep BeamMP
+    // kill -2 $(pgrep BeamMP)
+  
+    res.status(200).json(response)
+  }
 
-  // pgrep BeamMP
-  // kill -2 $(pgrep BeamMP)
-
-  res.status(200).json(response)
 }

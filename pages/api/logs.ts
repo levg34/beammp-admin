@@ -6,11 +6,16 @@ import { getSSHClient } from '../../utils/sshUtils'
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<SSHExecCommandResponse>
+  res: NextApiResponse<SSHExecCommandResponse | {error:any}>
 ) {
-  const sshClient = await getSSHClient()
-
-  const response = await sshClient.execCommand(`sed '${getSedFilterString()}' ./beammp-server/Server.log`)
-
-  res.status(200).json(response)
+  try {
+    const sshClient = await getSSHClient()
+  
+    const response = await sshClient.execCommand(`sed '${getSedFilterString()}' ./beammp-server/Server.log`)
+  
+    res.status(200).json(response)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({error})
+  }
 }
