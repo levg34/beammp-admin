@@ -14,9 +14,7 @@ export default async function handler(
 ) {
   try {
     const session = await getSession({ req })
-
     if (!session) return res.status(401).json({error: 'Unauthorized'})
-
     if (!session.user?.email || !usersConfig.admins.includes(session.user?.email)) return res.status(403).json({error: 'Forbidden'})
 
     const config: definitions['config'] = req.body

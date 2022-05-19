@@ -16,9 +16,7 @@ export default async function handler(
   res: NextApiResponse<ExtractReport | ErrorReturnType>
 ) {
   const session = await getSession({ req })
-
   if (!session) return res.status(401).json({error: 'Unauthorized'})
-
   if (!session.user?.email || !usersConfig.admins.includes(session.user?.email)) return res.status(403).json({error: 'Forbidden'})
 
   let inserted = {}
