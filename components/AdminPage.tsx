@@ -1,3 +1,5 @@
+import { DefaultSession } from 'next-auth'
+import { signOut } from 'next-auth/react'
 import Link from 'next/link'
 import { SSHExecCommandResponse } from 'node-ssh'
 import { useEffect, useState } from 'react'
@@ -11,11 +13,10 @@ import { fetcher } from '../utils/swrUtils'
 type ServerState = 'started' | 'stopped' | 'starting...' | 'stopping...'
 
 type Props = {
-    login: string,
-    logout: () => void
+    user: DefaultSession["user"]
 }
 
-const AdminPage = ({login,logout}: Props) => {
+const AdminPage = ({user}: Props) => {
     const { mutate } = useSWRConfig()
   
     const [serverState, setServerState] = useState<ServerState>('stopped')
@@ -70,9 +71,9 @@ const AdminPage = ({login,logout}: Props) => {
       <Container>
         <Card body>
             <Stack direction="horizontal" gap={2}>
-                <span>Logged in as {login}</span>
-                <Image src="https://avatars.githubusercontent.com/u/137276?v=4" roundedCircle style={{height: 35}} alt="avatar"/>
-                <Button onClick={logout} className="ms-auto">Log out</Button>
+                <span>Logged in as {user?.name ?? 'Luc'}</span>
+                <Image src={user?.image ?? ''} roundedCircle style={{height: 35}} alt="avatar"/>
+                <Button onClick={() => signOut()} className="ms-auto">Log out</Button>
             </Stack>
         </Card>
         <br/>

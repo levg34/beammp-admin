@@ -1,36 +1,16 @@
 import type { NextPage } from 'next'
 import { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
+import { useSession } from 'next-auth/react'
 import AdminPage from '../components/AdminPage'
 import Login from '../components/Login'
 
 const Home: NextPage = () => {
-  const [login, setLogin] = useState<string|null>(null)
-
-  const checkLogin = () => {
-    const localLogin = sessionStorage.getItem('login')
-    if (localLogin) {
-      setLogin(localLogin)
-    } else {
-      setLogin(null)
-    }
-  }
-
-  useEffect(checkLogin,[])
-
-  const logout = () => {
-    sessionStorage.removeItem('login')
-    setLogin(null)
-  }
-
-  const logIn = () => {
-    sessionStorage.setItem('login','luc')
-    setLogin('luc')
-  }
+  const { data: session } = useSession()
 
   return (
     <Container>
-      {login ? <AdminPage login={login} logout={logout}/> : <Login setLogin={setLogin} logIn={logIn}/>}
+      {session ? <AdminPage user={session.user}/> : <Login/>}
     </Container>
   )
 }

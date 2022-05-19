@@ -12,7 +12,7 @@ export default async function handler(
   try {
     const sshClient = await getSSHClient()
     const response = await sshClient.execCommand('cat beammp-server/ServerConfig.toml')
-    logger.info({response, user: 'luc'}, 'get config')
+    logger.info({response, user: session.user.email}, 'get config')
     res.status(200).json(response)
   } catch (error) {
     logger.error(error)
