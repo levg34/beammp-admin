@@ -1,15 +1,10 @@
-import { Dispatch, SetStateAction } from "react"
+import { signIn } from "next-auth/react"
 import { Button, Card, Stack } from "react-bootstrap"
 
-type Props = {
-    setLogin: Dispatch<SetStateAction<string | null>>,
-    logIn: () => void
-}
-
-const Login = ({setLogin, logIn}: Props) => <Card body>
+const Login = () => <Card body>
     <Stack gap={3}>
         <span>Login</span>
-        <span><Button onClick={logIn}>Login</Button></span>
+        <span><Button onClick={() => signIn()}>Login</Button></span>
     </Stack>
 </Card>
 
