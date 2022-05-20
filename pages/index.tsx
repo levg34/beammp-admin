@@ -1,5 +1,4 @@
 import type { NextPage } from 'next'
-import { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
 import { useSession } from 'next-auth/react'
 import AdminPage from '../components/AdminPage'
@@ -10,7 +9,7 @@ const Home: NextPage = () => {
 
   return (
     <Container>
-      {session ? <AdminPage user={session.user}/> : <Login/>}
+      {session ? <AdminPage/> : <Login/>}
     </Container>
   )
 }

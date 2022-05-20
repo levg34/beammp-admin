@@ -1,9 +1,7 @@
-import { DefaultSession } from 'next-auth'
-import { signOut } from 'next-auth/react'
 import Link from 'next/link'
 import { SSHExecCommandResponse } from 'node-ssh'
 import { useEffect, useState } from 'react'
-import { Accordion, Badge, Button, ButtonGroup, Card, Container, Image, ListGroup, Stack } from 'react-bootstrap'
+import { Accordion, Badge, Button, ButtonGroup, Card, Container, ListGroup, Stack } from 'react-bootstrap'
 import useSWR, { useSWRConfig } from 'swr'
 import UserList from '../classes/UserList'
 import UserDisplay from '../components/UserDisplay'
@@ -12,11 +10,7 @@ import { fetcher } from '../utils/swrUtils'
 
 type ServerState = 'started' | 'stopped' | 'starting...' | 'stopping...'
 
-type Props = {
-    user: DefaultSession["user"]
-}
-
-const AdminPage = ({user}: Props) => {
+const AdminPage = () => {
     const { mutate } = useSWRConfig()
   
     const [serverState, setServerState] = useState<ServerState>('stopped')
@@ -69,14 +63,6 @@ const AdminPage = ({user}: Props) => {
   
     return (
       <Container>
-        <Card body>
-            <Stack direction="horizontal" gap={2}>
-                <span>Logged in as {user?.name ?? 'Luc'}</span>
-                <Image src={user?.image ?? 'https://avatars.githubusercontent.com/u/137276?v=4'} roundedCircle style={{height: 35}} alt="avatar"/>
-                <Button onClick={() => signOut()} className="ms-auto">Log out</Button>
-            </Stack>
-        </Card>
-        <br/>
         <Accordion defaultActiveKey="0">
           <Accordion.Item eventKey="0">
             <Accordion.Header>

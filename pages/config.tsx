@@ -35,7 +35,6 @@ const ConfigPage: NextPage = () => {
     }
 
     return <Container>
-        <br/>
         <Link href={'/'} passHref><Button>Return to server monitoring page</Button></Link>
         <br/><br/>
         <Form as={Card} body>
