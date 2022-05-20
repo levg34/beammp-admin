@@ -2,9 +2,9 @@ import { signIn } from "next-auth/react"
 import { Button, Card, Stack } from "react-bootstrap"
 
 const Login = () => <Card body>
-    <Stack gap={3}>
+    <Stack direction="horizontal" gap={2}>
         <span>Login</span>
-        <span><Button onClick={() => signIn()}>Login</Button></span>
+        <span className="ms-auto"><Button onClick={() => signIn()}>Login</Button></span>
     </Stack>
 </Card>
 
