@@ -78,6 +78,11 @@ const AdminPage = () => {
                   <Button variant="danger" onClick={stopServer}>Stop</Button>
                 </ButtonGroup>
                 <Button variant="primary" onClick={refreshData}>Refresh</Button>
+                <Button className="d-none d-sm-inline" variant="warning" onClick={resetSSH}>Reset SSH connexion</Button>
+                <Link href={'/config'} passHref><Button className="d-none d-sm-inline" variant="outline-info">Edit configuration</Button></Link>
+              </Stack>
+              <br className="d-sm-none"/>
+              <Stack className="d-sm-none" direction="horizontal" gap={2}>
                 <Button variant="warning" onClick={resetSSH}>Reset SSH connexion</Button>
                 <Link href={'/config'} passHref><Button variant="outline-info">Edit configuration</Button></Link>
               </Stack>
