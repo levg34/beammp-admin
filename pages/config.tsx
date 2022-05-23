@@ -1,26 +1,22 @@
-import { NextPage } from "next";
-import Link from "next/link";
-import { SSHExecCommandResponse } from "node-ssh";
-import { Button, Card, Container, Form, FormControl, InputGroup } from "react-bootstrap";
-import useSWR from "swr";
-import { fetcher } from "../utils/swrUtils";
-import toml from 'toml';
-import { useEffect, useState } from "react";
-
-type ServerConfig = {
-    General: Record<string,string | number | boolean>
-}
+import { NextPage } from 'next'
+import Link from 'next/link'
+import { SSHExecCommandResponse } from 'node-ssh'
+import { Button, Card, Container, Form, FormControl, InputGroup } from 'react-bootstrap'
+import useSWR from 'swr'
+import { fetcher } from '../utils/swrUtils'
+import { useEffect, useState } from 'react'
+import ServerConfig, { ServerConfigType } from '../classes/ServerConfig'
 
 const ConfigPage: NextPage = () => {
     const {data: configResponse} = useSWR<SSHExecCommandResponse>('/api/config',fetcher)
-    const config = configResponse?.stdout
-    const [parsedConfig, setParsedConfig] = useState<ServerConfig>({General:{}})
+    const configString = configResponse?.stdout
+    const [config, setParsedConfig] = useState<ServerConfig>(new ServerConfig())
 
     useEffect(() => {
-        if (config) {
-            setParsedConfig(toml.parse(config))
+        if (configString) {
+            setParsedConfig(new ServerConfig(configString))
         }
-    },[config])
+    },[configString])
 
     const saveConfig = async () => {
         const response = await fetcher('/api/save-config', {
@@ -29,7 +25,7 @@ const ConfigPage: NextPage = () => {
               'Content-Type': 'application/json'
             },
             redirect: 'follow',
-            body: JSON.stringify(parsedConfig.General)
+            body: config.toJSON()
         })
         console.log(response)
     }
@@ -38,8 +34,8 @@ const ConfigPage: NextPage = () => {
         <Link href={'/'} passHref><Button>Return to server monitoring page</Button></Link>
         <br/><br/>
         <Form as={Card} body>
-            {Object.keys(parsedConfig.General).map(confItem => {
-                const configValue = parsedConfig.General[confItem];
+            {Object.keys(config.configObject()).map(confItem => {
+                const configValue = config.configObject()[confItem];
                 return <InputGroup key={confItem} className="mt-2">
                     <InputGroup.Text>{confItem}</InputGroup.Text>
                     {typeof configValue === 'string' && <FormControl type="text" value={configValue}/>}
@@ -56,7 +52,7 @@ const ConfigPage: NextPage = () => {
         <Card body as="pre" style={{
             backgroundColor:'black',
             color: '#7FFF00'
-        }}>{config}</Card>
+        }}>{configString}</Card>
     </Container>
 }
 

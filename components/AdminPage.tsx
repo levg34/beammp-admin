@@ -1,11 +1,12 @@
 import Link from 'next/link'
 import { SSHExecCommandResponse } from 'node-ssh'
 import { useEffect, useState } from 'react'
-import { Accordion, Badge, Button, ButtonGroup, Card, Container, ListGroup, Stack } from 'react-bootstrap'
+import { Accordion, Badge, Button, ButtonGroup, Card, Container, Form, ListGroup, Stack } from 'react-bootstrap'
 import useSWR, { useSWRConfig } from 'swr'
 import UserList from '../classes/UserList'
 import UserDisplay from '../components/UserDisplay'
 import UserListDisplay from '../components/UserListDisplay'
+import { ConfigList } from '../pages/api/list-configs'
 import { fetcher } from '../utils/swrUtils'
 
 type ServerState = 'started' | 'stopped' | 'starting...' | 'stopping...'
@@ -53,12 +54,40 @@ const AdminPage = () => {
     const refreshData = () => {
       mutate('/api/logs')
       mutate('/api/server-status')
+      // mutate('/api/list-configs')
     }
   
     const resetSSH = async () => {
       const res = await fetcher('/api/reset-ssh',undefined)
       refreshData()
       console.log(res.stdout === 'ok')
+    }
+
+    const {data: configList} = useSWR<ConfigList>('/api/list-configs',fetcher)
+
+    const [selectedConfigFile, setSelectedConfigFile] = useState<string>()
+
+    useEffect(() => {
+      if (configList && !selectedConfigFile && configList.current) {
+        setSelectedConfigFile(configList.current)
+      }
+    },[configList])
+
+    const selectConfig = async () => {
+      if (configList?.current === selectedConfigFile) return
+      const response = await fetcher('/api/switch-config', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        redirect: 'follow',
+        body: JSON.stringify({
+          selected: selectedConfigFile,
+          saveCurrent: !configList?.current
+        })
+      })
+      mutate('/api/list-configs')
+      console.log(response)
     }
   
     return (
@@ -114,6 +143,16 @@ const AdminPage = () => {
               <UserListDisplay userList={userList}/>
             </Accordion.Body>
           </Accordion.Item>
+          {(configList && configList.files.length > 0) && <Accordion.Item eventKey="3">
+            <Accordion.Header>Switch config</Accordion.Header>
+            <Accordion.Body>
+              <div>Selected conf file: {configList.current ?? 'new config'}</div>
+              <Form.Select disabled={serverState !== 'stopped'} value={selectedConfigFile} onChange={e => setSelectedConfigFile(e.target.value)}>
+                {configList.files.map(file => <option key={file} value={file}>{file}</option>)}
+              </Form.Select>
+              <Button onClick={selectConfig} disabled={serverState !== 'stopped' || selectedConfigFile === configList.current}>Select config</Button>
+            </Accordion.Body>
+          </Accordion.Item>}
         </Accordion>
         <br/>
         <Card body as="pre">{logs}</Card>

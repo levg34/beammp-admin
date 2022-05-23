@@ -8,7 +8,7 @@ import { getLogger } from '../../utils/loggerUtils'
 
 import usersConfig from '../../config/usersConfig.json'
 
-const logger = getLogger('log-rotate.ts.ts')
+const logger = getLogger('log-rotate.ts')
 
 export default async function handler(
   req: NextApiRequest,
