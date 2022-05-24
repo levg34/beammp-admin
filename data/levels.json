@@ -1,0 +1,107 @@
+[
+    {
+        "file": "automation_test_track.zip",
+        "prefix": "automation_test_track",
+        "enable": false
+    },
+    {
+        "file": "autotest.zip",
+        "prefix": "autotest",
+        "enable": false
+    },
+    {
+        "file": "Cliff.zip",
+        "prefix": "Cliff",
+        "enable": false
+    },
+    {
+        "file": "derby.zip",
+        "prefix": "derby",
+        "enable": false
+    },
+    {
+        "file": "driver_training.zip",
+        "prefix": "driver_training",
+        "enable": false
+    },
+    {
+        "file": "east_coast_usa.zip",
+        "prefix": "east_coast_usa",
+        "enable": false
+    },
+    {
+        "file": "garage.zip",
+        "prefix": "garage",
+        "enable": false
+    },
+    {
+        "file": "glow_city.zip",
+        "prefix": "glow_city",
+        "enable": false
+    },
+    {
+        "file": "GridMap.zip",
+        "prefix": "GridMap",
+        "enable": false
+    },
+    {
+        "file": "gridmap_v2.zip",
+        "prefix": "gridmap_v2",
+        "enable": false
+    },
+    {
+        "file": "hirochi_raceway.zip",
+        "prefix": "hirochi_raceway",
+        "name": "Hirochi raceway",
+        "enable": true
+    },
+    {
+        "file": "Industrial.zip",
+        "prefix": "Industrial",
+        "enable": false
+    },
+    {
+        "file": "italy.zip",
+        "prefix": "italy",
+        "name": "Italy",
+        "enable": true
+    },
+    {
+        "file": "jungle_rock_island.zip",
+        "prefix": "jungle_rock_island",
+        "enable": false
+    },
+    {
+        "file": "showroom_v2_white.zip",
+        "prefix": "showroom_v2_white",
+        "enable": false
+    },
+    {
+        "file": "smallgrid.zip",
+        "prefix": "smallgrid",
+        "enable": false
+    },
+    {
+        "file": "small_island.zip",
+        "prefix": "small_island",
+        "name": "Small island",
+        "enable": true
+    },
+    {
+        "file": "template.zip",
+        "prefix": "template",
+        "enable": false
+    },
+    {
+        "file": "Utah.zip",
+        "prefix": "Utah",
+        "name": "Utah",
+        "enable": true
+    },
+    {
+        "file": "west_coast_usa.zip",
+        "prefix": "west_coast_usa",
+        "name": "West Coast USA",
+        "enable": true
+    }
+]
