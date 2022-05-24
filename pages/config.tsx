@@ -83,7 +83,7 @@ const ConfigPage: NextPage = () => {
         <br/>
         {warning && <Alert variant='warning'><IconAlertTriangle/> Config has been modified on the server. <Alert.Link onClick={reloadConfig}>Reload</Alert.Link> config from server?</Alert>}
         <DropdownButton id="dropdown-basic-button" title="Select map" variant="dark">
-            {levels.filter(l => l.enable).map(level => <Dropdown.Item onClick={() => selectMap(level.prefix)}>{level.name ?? level.prefix}</Dropdown.Item>)}
+            {levels.filter(l => l.enable).map(level => <Dropdown.Item key={level.prefix} onClick={() => selectMap(level.prefix)}>{level.name ?? level.prefix}</Dropdown.Item>)}
         </DropdownButton>
         <Form as={Card} body>
             {Object.keys(config.configObject()).map(confItem => {
