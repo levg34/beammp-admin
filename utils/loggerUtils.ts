@@ -6,9 +6,9 @@ const transport = pino.transport({
       target: 'pino/file',
       options: { destination: 'logs/error.log' }
     },{
-        target: 'pino-pretty',
-        options: { destination: 1, translateTime: true },
-        level: 'info'
+      level: 'info',
+      target: 'pino/file',
+      options: { destination: 'logs/logs.log' }
     }]
   })
 
