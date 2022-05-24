@@ -4,7 +4,7 @@ import { SSHExecCommandResponse } from 'node-ssh'
 import { Alert, Button, Card, Container, Dropdown, DropdownButton, Form, FormControl, InputGroup } from 'react-bootstrap'
 import useSWR from 'swr'
 import _ from 'lodash'
-import { IconAlertTriangle } from '@tabler/icons'
+import { IconAlertTriangle, IconDeviceFloppy } from '@tabler/icons'
 import { fetcher } from '../utils/swrUtils'
 import { useEffect, useState } from 'react'
 import ServerConfig from '../classes/ServerConfig'
@@ -25,6 +25,7 @@ const ConfigPage: NextPage = () => {
     }, [configString])
 
     const saveConfig = async () => {
+        setSuccess(undefined)
         const response = await fetcher('/api/save-config', {
             method: 'POST',
             headers: {
@@ -34,17 +35,24 @@ const ConfigPage: NextPage = () => {
             body: config.toJSON()
         })
         console.log(response)
+        if (!response.stderr) {
+            setSuccess(`Config saved in the database.`)
+        }
     }
 
-    const extractName = (mapPath: string): string => {
+    const getFilenameFromMapPath = (mapPath: string): string => {
         const matches = mapPath.match(/^\/[^/]+\/([^/]+)\//)
-        return matches && matches[1] ? matches[1].split('_').map(m => _.capitalize(m)).join('') : 'New'
+        const middleName = matches && matches[1] ? matches[1].split('_').map(m => _.capitalize(m)).join('') : 'New'
+        return `ServerConfig${middleName}.toml`
     }
+
+    const [success, setSuccess] = useState<string>()
 
     const applyConfig = async () => {
+        setSuccess(undefined)
         const configToSave = {
             config: config.toTOML(),
-            file: `ServerConfig${extractName(config.configObject().Map as string)}.toml`
+            file: getFilenameFromMapPath(config.configObject().Map as string)
         }
         const response = await fetcher('/api/apply-config', {
             method: 'POST',
@@ -55,6 +63,9 @@ const ConfigPage: NextPage = () => {
             body: JSON.stringify(configToSave)
         })
         console.log(response)
+        if (!response.stderr) {
+            setSuccess(`Config saved on the server as ${getFilenameFromMapPath(config.configObject().Map as string)}.`)
+        }
     }
 
     const reloadConfig = () => {
@@ -81,10 +92,12 @@ const ConfigPage: NextPage = () => {
         <Link href={'/'} passHref><Button>Return to server monitoring page</Button></Link>
         <br/>
         <br/>
-        {warning && <Alert variant='warning'><IconAlertTriangle/> Config has been modified on the server. <Alert.Link onClick={reloadConfig}>Reload</Alert.Link> config from server?</Alert>}
+        {warning && <Alert variant="warning"><IconAlertTriangle/> Config has been modified on the server. <Alert.Link onClick={reloadConfig}>Reload</Alert.Link> config from server?</Alert>}
+        {success && <Alert variant="success"><IconDeviceFloppy/> {success}</Alert>}
         <DropdownButton id="dropdown-basic-button" title="Select map" variant="dark">
             {levels.filter(l => l.enable).map(level => <Dropdown.Item key={level.prefix} onClick={() => selectMap(level.prefix)}>{level.name ?? level.prefix}</Dropdown.Item>)}
         </DropdownButton>
+        <span>Config file will be saved as: {config.configObject().Map ? getFilenameFromMapPath(config.configObject().Map as string) : `ServerConfigNew.toml`}</span>
         <Form as={Card} body>
             {Object.keys(config.configObject()).map(confItem => {
                 const configValue = config.configObject()[confItem];
