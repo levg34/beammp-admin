@@ -36,10 +36,15 @@ const ConfigPage: NextPage = () => {
         console.log(response)
     }
 
+    const extractName = (mapPath: string): string => {
+        const matches = mapPath.match(/^\/[^/]+\/([^/]+)\//)
+        return matches && matches[1] ? matches[1].split('_').map(m => _.capitalize(m)).join('') : 'New'
+    }
+
     const applyConfig = async () => {
         const configToSave = {
             config: config.toTOML(),
-            file: 'ServerConfigNew.toml'
+            file: `ServerConfig${extractName(config.configObject().Map as string)}.toml`
         }
         const response = await fetcher('/api/apply-config', {
             method: 'POST',
