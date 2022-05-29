@@ -4,7 +4,7 @@ import usersConfig from '../../../config/usersConfig.json'
 import { getLogger } from '../../../utils/loggerUtils'
 import { getSSHClient } from '../../../utils/sshUtils'
 
-const logger = getLogger('list-configs.ts')
+const logger = getLogger('list-resources/[folder].ts')
 
 export default async function handler(
     req: NextApiRequest,
@@ -21,9 +21,9 @@ export default async function handler(
         
         const response = await sshClient.execCommand(`cd beammp-server/${folder}/Client; for FILE in \`ls -S\`; do du -sh $FILE ; done`)
 
-        if (response.stderr) return res.status(500).json({error: response.stderr})
-        
         logger.info({response, user: session.user.email}, 'list resources')
+        
+        if (response.stderr) return res.status(500).json({error: response.stderr}) 
         
         res.status(200).json(response.stdout.split('\n'))
     } catch (error) {
