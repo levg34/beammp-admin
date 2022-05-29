@@ -12,6 +12,7 @@ import levels from '../data/levels.json'
 
 const ConfigPage: NextPage = () => {
     const {data: configResponse} = useSWR<SSHExecCommandResponse>('/api/config',fetcher)
+    const {data: resourcesFolders} = useSWR<string[]>('/api/resources-folders',fetcher)
     const configString = configResponse?.stdout
     const [config, setConfig] = useState<ServerConfig>(new ServerConfig())
     const [warning, setWarning] = useState<boolean>()
@@ -88,21 +89,28 @@ const ConfigPage: NextPage = () => {
         setConfig(config.editConfig('Map', `/levels/${prefix}/info.json`))
     }
 
+    const selectFolder = (folder: string) => {
+        setConfig(config.editConfig('ResourceFolder', folder))
+    }
+
     return <Container>
         <Link href={'/'} passHref><Button>Return to server monitoring page</Button></Link>
         <br/>
         <br/>
         {warning && <Alert variant="warning"><IconAlertTriangle/> Config has been modified on the server. <Alert.Link onClick={reloadConfig}>Reload</Alert.Link> config from server?</Alert>}
         {success && <Alert variant="success"><IconDeviceFloppy/> {success}</Alert>}
-        <DropdownButton id="dropdown-basic-button" title="Select map" variant="dark">
-            {levels.filter(l => l.enable).map(level => <Dropdown.Item key={level.prefix} onClick={() => selectMap(level.prefix)}>{level.name ?? level.prefix}</Dropdown.Item>)}
-        </DropdownButton>
         <span>Config file will be saved as: {config.configObject().Map ? getFilenameFromMapPath(config.configObject().Map as string) : `ServerConfigNew.toml`}</span>
         <Form as={Card} body>
             {Object.keys(config.configObject()).map(confItem => {
                 const configValue = config.configObject()[confItem];
                 return <InputGroup key={confItem} className="mt-2">
                     <InputGroup.Text>{confItem}</InputGroup.Text>
+                    {confItem === 'ResourceFolder' && <DropdownButton title="Select folder" variant="dark">
+                        {(resourcesFolders ?? []).map(folder => <Dropdown.Item key={folder} onClick={() => selectFolder(folder)}>{folder}</Dropdown.Item>)}
+                    </DropdownButton>}
+                    {confItem === 'Map' && <DropdownButton title="Select map" variant="dark">
+                        {levels.filter(l => l.enable).map(level => <Dropdown.Item key={level.prefix} onClick={() => selectMap(level.prefix)}>{level.name ?? level.prefix}</Dropdown.Item>)}
+                    </DropdownButton>}
                     {typeof configValue === 'string' && <FormControl type="text" value={configValue} onChange={e => handleValueChange(e,confItem)}/>}
                     {typeof configValue === 'number' && <FormControl type="number" value={configValue} onChange={e =>handleValueChange(e,confItem)}/>}
                     {typeof configValue === 'boolean' && <div className="d-flex align-items-center"><Form.Check className="ms-3" type="switch" checked={configValue} onChange={e => handleCheckboxChange(e,confItem)}/></div>}
