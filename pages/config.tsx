@@ -95,6 +95,7 @@ const ConfigPage: NextPage = () => {
 
     return <Container>
         <Link href={'/'} passHref><Button>Return to server monitoring page</Button></Link>
+        <Link href={'/resources'} passHref><Button variant="secondary">Edit resources</Button></Link>
         <br/>
         <br/>
         {warning && <Alert variant="warning"><IconAlertTriangle/> Config has been modified on the server. <Alert.Link onClick={reloadConfig}>Reload</Alert.Link> config from server?</Alert>}

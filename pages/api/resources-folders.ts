@@ -22,7 +22,7 @@ export default async function handler(
   
     const response = await sshClient.execCommand(`cd beammp-server; ls -d */ | cut -f1 -d'/' | grep Resources`)
 
-    logger.info({response, user: session.user.email}, 'get logs')
+    logger.info({response, user: session.user.email}, 'list resources folders')
   
     res.status(200).json(response.stdout.split('\n'))
   } catch (error) {
