@@ -1,7 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { SSHExecCommandResponse } from 'node-ssh'
 import { getSession } from 'next-auth/react'
-import { getSedFilterString } from '../../utils/configUtils'
 import { getLogger } from '../../utils/loggerUtils'
 import { getSSHClient } from '../../utils/sshUtils'
 
