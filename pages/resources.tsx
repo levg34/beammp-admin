@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Container, FormControl, InputGroup, Button, Form, ListGroup, Alert, Spinner } from 'react-bootstrap'
-import useSWR from 'swr'
+import useSWR, { useSWRConfig } from 'swr'
 import { fetcher } from '../utils/swrUtils'
 
 const ResourcesPage = () => {
@@ -25,6 +25,8 @@ const ResourcesPage = () => {
 
     const [feedback, setFeedback] = useState<Feedback>()
     const [downloading, setDownloading] = useState<boolean>(false)
+
+    const { mutate } = useSWRConfig()
 
     const uploadResource = async () => {
         setFeedback(undefined)
@@ -67,6 +69,7 @@ const ResourcesPage = () => {
             })
         } finally {
             setDownloading(false)
+            mutate('/api/list-resources/Resources')
         }
     }
 
