@@ -1,13 +1,14 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Container, FormControl, InputGroup, Button, Form, ListGroup, Alert, Spinner, Stack, DropdownButton, Dropdown } from 'react-bootstrap'
-import useSWR, { useSWRConfig } from 'swr'
+import useSWR from 'swr'
 import { fetcher } from '../utils/swrUtils'
 import { ResourceItem } from './api/resources/list/[folder]'
 
 const ResourcesPage = () => {
     const {data: resourcesFolders} = useSWR<string[]>('/api/resources-folders',fetcher)
-    const {data: resources} = useSWR<ResourceItem[]>('/api/resources/list/Resources',fetcher)
-
+    // const {data: resources} = useSWR<ResourceItem[]>('/api/resources/list/Resources',fetcher)
+    const [resources, setResources] = useState<ResourceItem[]>()
+    
     type Resource = {
         url: string
         folder: string
@@ -17,16 +18,23 @@ const ResourcesPage = () => {
         variant: 'success' | 'warning' | 'danger',
         text: string
     }
-
+    
     const [resource, setResource] = useState<Resource>({
         url: '',
         folder: 'Resources'
     })
 
+    const getResources = async (folder?: string) => {
+        const newResources = await fetcher('/api/resources/list/'+(folder ?? resource.folder), undefined)
+        setResources(newResources)
+    }
+
+    useEffect(() => {
+        getResources()
+    }, [])
+
     const [feedback, setFeedback] = useState<Feedback>()
     const [downloading, setDownloading] = useState<boolean>(false)
-
-    const { mutate } = useSWRConfig()
 
     const uploadResource = async () => {
         setFeedback(undefined)
@@ -68,7 +76,7 @@ const ResourcesPage = () => {
             })
         } finally {
             setDownloading(false)
-            mutate('/api/resources/list/Resources')
+            getResources()
         }
     }
 
@@ -104,7 +112,7 @@ const ResourcesPage = () => {
                 variant: 'danger'
             })
         } finally {
-            mutate('/api/resources/list/Resources')
+            getResources()
         }
     }
 
@@ -136,7 +144,7 @@ const ResourcesPage = () => {
                     variant: 'danger'
                 })
             } finally {
-                mutate('/api/resources/list/Resources')
+                getResources()
             }
         }
     }
@@ -148,10 +156,13 @@ const ResourcesPage = () => {
                 ...resource,
                 url: e.target.value
             })}/>
-            <Form.Select aria-label="Resources folder" style={{maxWidth: '150px'}} value={resource.folder} onChange={e => setResource({
-                ...resource,
-                folder: e.target.value
-            })}>
+            <Form.Select aria-label="Resources folder" style={{maxWidth: '250px'}} value={resource.folder} onChange={e => {
+                setResource({
+                    ...resource,
+                    folder: e.target.value
+                })
+                getResources(e.target.value)
+            }}>
                 {(resourcesFolders ?? []).map(folder => <option key={folder}>{folder}</option>)}
             </Form.Select>
             <Button variant="outline-primary" onClick={uploadResource} disabled={downloading || !resource.url}>{downloading ? <Spinner animation="border" variant="primary"/> :'Download'}</Button>
