@@ -1,6 +1,8 @@
 # BeamMP admin
 Web interface for [BeamMP server](https://github.com/BeamMP/BeamMP-Server)
 
+[![.github/workflows/main.yml](https://github.com/levg34/beammp-admin/actions/workflows/main.yml/badge.svg)](https://github.com/levg34/beammp-admin/actions/workflows/main.yml)
+
 Now complete with log rotate, and saving users from rotated logs to database!
 Feature flipping comming soon.
 
