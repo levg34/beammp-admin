@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - uses: appleboy/ssh-action@master
-      - name: Pull, install, build and deploy to remote server
+        name: Pull, install, build and deploy to remote server
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
