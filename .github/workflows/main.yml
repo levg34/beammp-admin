@@ -1,7 +1,5 @@
 name: Deploy to server
 
-env: prod
-
 on:
   push:
     branches: [ main ]
