@@ -111,9 +111,10 @@ const AdminPage = () => {
                 <Link href={'/config'} passHref><Button className="d-none d-sm-inline" variant="outline-info">Edit configuration</Button></Link>
                 <Link href={'/resources'} passHref><Button variant="outline-secondary" className="d-none d-sm-inline">Edit resources</Button></Link>
               </Stack>
-              <br className="d-sm-none"/>
-              <Stack className="d-sm-none" direction="horizontal" gap={2}>
+              <Stack className="d-sm-none mt-2" direction="horizontal" gap={2}>
                 <Button variant="warning" onClick={resetSSH}>Reset SSH connexion</Button>
+              </Stack>
+              <Stack className="d-sm-none mt-2" direction="horizontal" gap={2}>
                 <Link href={'/config'} passHref><Button variant="outline-info">Edit configuration</Button></Link>
                 <Link href={'/resources'} passHref><Button variant="outline-secondary">Edit resources</Button></Link>
               </Stack>

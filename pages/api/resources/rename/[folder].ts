@@ -1,12 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { SSHExecCommandResponse } from 'node-ssh'
 import { getSession } from 'next-auth/react'
-import { getLogger } from '../../../utils/loggerUtils'
-import { getSSHClient } from '../../../utils/sshUtils'
+import { getLogger } from '../../../../utils/loggerUtils'
+import { getSSHClient } from '../../../../utils/sshUtils'
 
-import usersConfig from '../../../config/usersConfig.json'
+import usersConfig from '../../../../config/usersConfig.json'
 
-const logger = getLogger('download-resource/[folder].ts')
+const logger = getLogger('rename-resource/[folder].ts')
 
 export default async function handler(
   req: NextApiRequest,
@@ -20,11 +20,13 @@ export default async function handler(
     const sshClient = await getSSHClient()
 
     const { folder } = req.query
-    const { url, rename } = req.body
+    const { file, newName } = req.body
   
-    const response = await sshClient.execCommand(`cd beammp-server/${folder}/Client; wget ${url}`)
+    const response = await sshClient.execCommand(`cd beammp-server/${folder}/Client; mv ${file} ${newName}`)
 
-    logger.info({response, user: session.user.email}, 'get logs')
+    logger.info({response, folder, file, newName, user: session.user.email}, 'rename file')
+
+    if (response.stderr) return res.status(500).json({error: response.stderr}) 
   
     res.status(200).json(response)
   } catch (error) {
