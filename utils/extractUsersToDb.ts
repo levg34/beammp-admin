@@ -1,8 +1,8 @@
 import { getSSHClient } from './sshUtils'
-import { definitions } from '../types/supabase'
+import { definitions } from '@mytypes/supabase'
 import getDBClient from './dbUtils'
-import UserList, { MergeType } from '../classes/UserList'
-import User from '../classes/User'
+import UserList, { MergeType } from '@classes/UserList'
+import User from '@classes/User'
 
 export type ExtractReport = Record<string,MergeType>
 

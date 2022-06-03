@@ -1,10 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { SSHExecCommandResponse } from 'node-ssh'
 import { getSession } from 'next-auth/react'
-import { getLogger } from '../../utils/loggerUtils'
-import { resetSSHClient } from '../../utils/sshUtils'
+import { getLogger } from '@utils/loggerUtils'
+import { resetSSHClient } from '@utils/sshUtils'
 
-import usersConfig from '../../config/usersConfig.json'
+import usersConfig from '@config/usersConfig.json'
 
 const logger = getLogger('reset-ssh.ts')
 

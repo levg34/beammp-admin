@@ -1,11 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getSession } from 'next-auth/react'
-import ServerConfig from '../../classes/ServerConfig'
-import usersConfig from '../../config/usersConfig.json'
-import { getLogger } from '../../utils/loggerUtils'
-import { getSSHClient } from '../../utils/sshUtils'
+import ServerConfig from '@classes/ServerConfig'
+import usersConfig from '@config/usersConfig.json'
+import { getLogger } from '@utils/loggerUtils'
+import { getSSHClient } from '@utils/sshUtils'
 
-const logger = getLogger('list-configs.ts')
+const logger = getLogger('config/list.ts')
 
 export type ConfigList = {
     files: string[]

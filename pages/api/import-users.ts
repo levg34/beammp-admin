@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getSession } from 'next-auth/react'
-import extractUsersToDb, { ExtractReport } from '../../utils/extractUsersToDb'
-import { getLogger } from '../../utils/loggerUtils'
+import extractUsersToDb, { ExtractReport } from '@utils/extractUsersToDb'
+import { getLogger } from '@utils/loggerUtils'
 
-import usersConfig from '../../config/usersConfig.json'
+import usersConfig from '@config/usersConfig.json'
 
 const logger = getLogger('import-users.ts')
 
