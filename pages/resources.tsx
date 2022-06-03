@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Container, FormControl, InputGroup, Button, Form, ListGroup, Alert, Spinner, Stack, DropdownButton, Dropdown } from 'react-bootstrap'
 import useSWR from 'swr'
 import { fetcher } from '@utils/swrUtils'
-import { ResourceItem } from './api/resources/list/[folder]'
+import { ResourceItem } from '@api/resources/list/[folder]'
 
 const ResourcesPage = () => {
     const {data: resourcesFolders} = useSWR<string[]>('/api/resources-folders',fetcher)
