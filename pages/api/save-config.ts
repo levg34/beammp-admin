@@ -1,10 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getSession } from 'next-auth/react'
-import { saveConfigToDb } from '../../utils/configUtils'
-import { definitions } from '../../types/supabase'
-import { getLogger } from '../../utils/loggerUtils'
+import { saveConfigToDb } from '@utils/configUtils'
+import { definitions } from '@mytypes/supabase'
+import { getLogger } from '@utils/loggerUtils'
 
-import usersConfig from '../../config/usersConfig.json'
+import usersConfig from '@config/usersConfig.json'
 
 const logger = getLogger('save-config.ts')
 

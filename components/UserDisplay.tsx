@@ -1,6 +1,6 @@
 import { Badge, Stack } from "react-bootstrap";
-import User from "../classes/User";
-import { isoDateToLocalDate } from "../utils/dateUtils";
+import User from "@classes/User";
+import { isoDateToLocalDate } from "@utils/dateUtils";
 
 type Props = {
     user: User

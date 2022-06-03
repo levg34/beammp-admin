@@ -1,6 +1,6 @@
-import filtersConfig from '../config/filtersConfig.json'
+import filtersConfig from '@config/filtersConfig.json'
 import getDBClient from './dbUtils'
-import { definitions } from '../types/supabase'
+import { definitions } from '@mytypes/supabase'
 
 function getFilters(): string[] {
     return filtersConfig.filters ?? []

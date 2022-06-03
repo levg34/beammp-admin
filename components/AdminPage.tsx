@@ -3,11 +3,11 @@ import { SSHExecCommandResponse } from 'node-ssh'
 import { useEffect, useState } from 'react'
 import { Accordion, Badge, Button, ButtonGroup, Card, Container, Form, ListGroup, Stack } from 'react-bootstrap'
 import useSWR, { useSWRConfig } from 'swr'
-import UserList from '../classes/UserList'
-import UserDisplay from '../components/UserDisplay'
-import UserListDisplay from '../components/UserListDisplay'
-import { ConfigList } from '../pages/api/list-configs'
-import { fetcher } from '../utils/swrUtils'
+import UserList from '@classes/UserList'
+import UserDisplay from '@components/UserDisplay'
+import UserListDisplay from '@components/UserListDisplay'
+import { ConfigList } from '@api/config/list'
+import { fetcher } from '@utils/swrUtils'
 
 type ServerState = 'started' | 'stopped' | 'starting...' | 'stopping...'
 
@@ -54,7 +54,7 @@ const AdminPage = () => {
     const refreshData = () => {
       mutate('/api/logs')
       mutate('/api/server-status')
-      // mutate('/api/list-configs')
+      // mutate('/api/config/list')
     }
   
     const resetSSH = async () => {
@@ -63,7 +63,7 @@ const AdminPage = () => {
       console.log(res.stdout === 'ok')
     }
 
-    const {data: configList} = useSWR<ConfigList>('/api/list-configs',fetcher)
+    const {data: configList} = useSWR<ConfigList>('/api/config/list',fetcher)
 
     const [selectedConfigFile, setSelectedConfigFile] = useState<string>()
 
@@ -86,7 +86,7 @@ const AdminPage = () => {
           saveCurrent: !configList?.current
         })
       })
-      mutate('/api/list-configs')
+      mutate('/api/config/list')
       console.log(response)
     }
   

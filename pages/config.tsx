@@ -5,10 +5,10 @@ import { Alert, Button, Card, Container, Dropdown, DropdownButton, Form, FormCon
 import useSWR from 'swr'
 import _ from 'lodash'
 import { IconAlertTriangle, IconDeviceFloppy } from '@tabler/icons'
-import { fetcher } from '../utils/swrUtils'
+import { fetcher } from '@utils/swrUtils'
 import { useEffect, useState } from 'react'
-import ServerConfig from '../classes/ServerConfig'
-import levels from '../data/levels.json'
+import ServerConfig from '@classes/ServerConfig'
+import levels from '@data/levels.json'
 
 const ConfigPage: NextPage = () => {
     const {data: configResponse} = useSWR<SSHExecCommandResponse>('/api/config',fetcher)

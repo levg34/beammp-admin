@@ -1,5 +1,5 @@
 import { Accordion, Badge, ListGroup, Stack } from "react-bootstrap"
-import UserList from "../classes/UserList"
+import UserList from "@classes/UserList"
 import UserDisplay from "./UserDisplay"
 
 type Props = {

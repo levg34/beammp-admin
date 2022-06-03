@@ -1,4 +1,4 @@
-import { logDateToDate } from "../utils/dateUtils";
+import { logDateToDate } from "@utils/dateUtils";
 import ConnexionEvent from "./ConnexionEvent";
 import User, {UserType} from "./User";
 

@@ -1,12 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { SSHExecCommandResponse } from 'node-ssh'
 import { getSession } from 'next-auth/react'
-import { getSSHClient } from '../../utils/sshUtils'
-import { logDateToISODate } from '../../utils/dateUtils'
-import { getSedFilterString } from '../../utils/configUtils'
-import { getLogger } from '../../utils/loggerUtils'
+import { getSSHClient } from '@utils/sshUtils'
+import { logDateToISODate } from '@utils/dateUtils'
+import { getSedFilterString } from '@utils/configUtils'
+import { getLogger } from '@utils/loggerUtils'
 
-import usersConfig from '../../config/usersConfig.json'
+import usersConfig from '@config/usersConfig.json'
 
 const logger = getLogger('log-rotate.ts')
 

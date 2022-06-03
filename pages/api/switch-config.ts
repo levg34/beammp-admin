@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getSession } from 'next-auth/react'
 import { SSHExecCommandResponse } from 'node-ssh'
-import usersConfig from '../../config/usersConfig.json'
-import { getLogger } from '../../utils/loggerUtils'
-import { getSSHClient } from '../../utils/sshUtils'
+import usersConfig from '@config/usersConfig.json'
+import { getLogger } from '@utils/loggerUtils'
+import { getSSHClient } from '@utils/sshUtils'
 
 const logger = getLogger('switch-config.ts')
 
