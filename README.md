@@ -24,7 +24,7 @@ You need one or two linux server / VPS / Raspberrypi (Debian 10+, Ubuntu 18+, Ra
 
 - One server to run [BeamMP-Server](https://github.com/BeamMP/BeamMP-Server/releases)
 
-- One server to run this admin app (can be the same server, with another user)
+- One server to run [this admin app](https://github.com/levg34/beammp-admin) (can be the same server, with another user)
 
 You can also deploy this admin app on Vercel.
 
@@ -155,8 +155,8 @@ Then define which users can use your app by creating `config/usersConfig.json` b
 
 ## More
 
-I will try to keep this readme up to date, but I add so much new features, that it may not be up to date.
+I will try to keep this readme up to date, but I add so much new features, that it may not be up to date when you read it.
 
 ## License
 
-This project is under the GNU v3 licence (see LICENCE file)
+This project is under the GNU v3 licence (see LICENSE.md file)
